@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DSO Talent Strategy Refresh</title>
+<style>
+  :root{
+    --navy:#17324d;
+    --blue:#2f6fa3;
+    --blue2:#6aa5cf;
+    --teal:#2a8f8a;
+    --emerald:#3d8b6d;
+    --gold:#c69b4b;
+    --coral:#d27a63;
+    --plum:#75649b;
+    --ink:#22313f;
+    --muted:#64748b;
+    --line:#dbe4ec;
+    --bg:#f6f9fc;
+    --card:#ffffff;
+    --mint:#eaf6f2;
+    --sand:#f8f3ea;
+    --lav:#f2eef8;
+    --rose:#faefec;
+    --accent:#0f6b78;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family: Inter, "Segoe UI", "Noto Sans TC", Arial, sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(circle at 10% 8%, rgba(106,165,207,.13), transparent 22%),
+      radial-gradient(circle at 90% 18%, rgba(61,139,109,.10), transparent 20%),
+      radial-gradient(circle at 78% 78%, rgba(198,155,75,.09), transparent 24%),
+      linear-gradient(180deg,#f8fbfe 0%,#f5f8fb 52%,#ffffff 100%);
+    line-height:1.58;
+    position:relative;
+  }
+  body:before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:.22;
+    background-image:
+      linear-gradient(rgba(23,50,77,.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(23,50,77,.035) 1px, transparent 1px);
+    background-size:28px 28px;
+    mask-image:linear-gradient(to bottom,rgba(0,0,0,.55),transparent 85%);
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+  .hero{
+    padding:70px 0 50px;
+    background:
+      radial-gradient(circle at 86% 12%, rgba(255,255,255,.16), transparent 18%),
+      radial-gradient(circle at 72% 78%, rgba(42,143,138,.28), transparent 28%),
+      radial-gradient(circle at 18% 90%, rgba(198,155,75,.18), transparent 24%),
+      linear-gradient(135deg,#142b42 0%,#214766 46%,#2f6fa3 78%,#2f7f82 100%);
+    color:white;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero:after{
+    content:"";
+    position:absolute;
+    right:-90px; top:-80px;
+    width:420px; height:420px;
+    border:1px solid rgba(255,255,255,.10);
+    border-radius:50%;
+    box-shadow:
+      0 0 0 55px rgba(255,255,255,.035),
+      0 0 0 110px rgba(255,255,255,.025);
+  }
+  .eyebrow{font-size:13px;letter-spacing:.14em;text-transform:uppercase;opacity:.75;font-weight:700}
+  h1{font-size:42px;line-height:1.12;margin:12px 0 14px;letter-spacing:-.02em}
+  .lead{max-width:820px;font-size:18px;color:rgba(255,255,255,.86);margin:0}
+  .hero-grid{display:grid;grid-template-columns:1.5fr .8fr;gap:28px;align-items:end}
+  .hero-card{
+    background:rgba(255,255,255,.10);
+    border:1px solid rgba(255,255,255,.16);
+    border-radius:18px;padding:22px 24px;
+    backdrop-filter: blur(8px);
+  }
+  .hero-card .big{font-size:32px;font-weight:800}
+  .hero-card .small{font-size:13px;color:rgba(255,255,255,.72)}
+  nav{
+    position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);
+    border-bottom:1px solid var(--line);backdrop-filter:blur(10px)
+  }
+  nav .wrap{display:flex;gap:22px;align-items:center;min-height:52px;overflow:auto}
+  nav a{color:#38536c;text-decoration:none;font-size:14px;font-weight:700;white-space:nowrap}
+  nav a:hover{color:var(--blue)}
+  section{padding:56px 0}
+  h2{font-size:30px;line-height:1.2;margin:0 0 12px;color:var(--navy)}
+  .section-intro{color:var(--muted);max-width:860px;margin-bottom:28px}
+  .kicker{color:var(--blue);font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .card{
+    background:
+      linear-gradient(180deg,rgba(255,255,255,.98),rgba(255,255,255,.94)),
+      var(--card);
+    border:1px solid var(--line);border-radius:18px;
+    padding:24px;box-shadow:0 10px 28px rgba(23,50,77,.07);
+    position:relative;overflow:hidden;
+  }
+  .card:before{
+    content:"";position:absolute;left:0;right:0;top:0;height:4px;
+    background:linear-gradient(90deg,var(--blue),var(--teal));
+  }
+  .grid3 .card:nth-child(2):before{background:linear-gradient(90deg,var(--gold),var(--coral))}
+  .grid3 .card:nth-child(3):before{background:linear-gradient(90deg,var(--plum),var(--blue2))}
+  .card h3{margin:4px 0 8px;color:var(--navy);font-size:19px}
+  .card p{margin:0;color:var(--muted);font-size:14px}
+  .num{
+    width:36px;height:36px;border-radius:11px;background:#e8f1f8;color:var(--blue);
+    display:flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:14px;
+    box-shadow:inset 0 0 0 1px rgba(47,111,163,.10)
+  }
+  .grid3 .card:nth-child(2) .num{background:#fbf2df;color:#a9751e}
+  .grid3 .card:nth-child(3) .num{background:#f0ecf8;color:#69588d}
+  .strategy{
+    display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:24px
+  }
+  .strategy .panel{padding:24px;border-radius:18px;border:1px solid var(--line)}
+  .before{
+    background:
+      radial-gradient(circle at 90% 10%, rgba(210,122,99,.12), transparent 24%),
+      linear-gradient(180deg,#fffaf6,#fbf3ec)
+  }
+  .after{
+    background:
+      radial-gradient(circle at 92% 12%, rgba(42,143,138,.14), transparent 24%),
+      linear-gradient(180deg,#f4fbfa,#eaf6f3)
+  }
+  .panel h3{margin:0 0 12px;color:var(--navy)}
+  ul{padding-left:20px;margin:8px 0 0}
+  li{margin:7px 0}
+  .table-wrap{overflow:auto;border-radius:16px;border:1px solid var(--line);background:#fff}
+  table{border-collapse:collapse;width:100%;min-width:880px}
+  th{background:#244560;color:#fff;font-weight:700;text-align:left;padding:14px 16px;font-size:14px}
+  td{padding:15px 16px;border-top:1px solid var(--line);vertical-align:top;font-size:14px}
+  tr:nth-child(even) td{background:#fbfdff}
+  .tag{
+    display:inline-block;padding:5px 9px;border-radius:999px;background:#e9f2f8;color:#2d5f87;
+    font-size:12px;font-weight:800;margin:2px 4px 2px 0
+  }
+  .role{
+    margin-top:28px;background:#fff;border:1px solid var(--line);border-radius:20px;
+    overflow:hidden;box-shadow:0 12px 28px rgba(23,50,77,.07)
+  }
+  .role-head{
+    padding:28px 30px;
+    background:
+      radial-gradient(circle at 92% 18%, rgba(106,165,207,.20), transparent 23%),
+      linear-gradient(120deg,#edf5fb 0%,#f9fbfd 65%,#eef8f5 100%)
+  }
+  .role-head h3{font-size:25px;margin:0;color:var(--navy)}
+  .role-head .subtitle{color:var(--muted);margin-top:8px}
+
+  #pm .role{border-top:5px solid var(--blue)}
+  #site .role{border-top:5px solid var(--teal)}
+  #ops .role{border-top:5px solid var(--gold)}
+  #pm .role-head{background:linear-gradient(120deg,#eaf3fb,#f8fbfe 65%,#edf7fb)}
+  #site .role-head{background:linear-gradient(120deg,#eaf7f4,#f7fbfa 65%,#eef8f5)}
+  #ops .role-head{background:linear-gradient(120deg,#fbf4e7,#fffaf2 65%,#f8f0ea)}
+  #pm .callout{border-left-color:var(--blue);background:#eef5fb}
+  #site .callout{border-left-color:var(--teal);background:#edf8f5}
+  #ops .callout{border-left-color:var(--gold);background:#fbf5e9}
+  #pm .tag{background:#e9f2f8;color:#2d5f87}
+  #site .tag{background:#e8f5f2;color:#27766f}
+  #ops .tag{background:#f8f0df;color:#8b6a28}
+  .section-band{
+    position:relative;overflow:hidden;
+  }
+  .section-band:before{
+    content:"";
+    position:absolute;
+    width:260px;height:260px;border-radius:50%;
+    right:-110px;top:-110px;
+    background:radial-gradient(circle,rgba(47,111,163,.10),transparent 66%);
+  }
+
+  .role-body{padding:28px}
+  .role-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  .block h4{margin:0 0 8px;color:#274d6c;font-size:16px}
+  .block p{margin:0 0 10px;color:#4b5f70}
+  .block ul{margin-top:4px}
+  .callout{
+    margin:24px 0 0;padding:18px 20px;border-left:4px solid var(--blue);
+    background:#f2f7fb;border-radius:10px;color:#34536c;font-weight:600
+  }
+  .quote{
+    font-size:22px;line-height:1.4;color:var(--navy);font-weight:700;
+    padding:28px 30px;border-radius:18px;
+    background:
+      radial-gradient(circle at 90% 20%,rgba(117,100,155,.12),transparent 22%),
+      linear-gradient(135deg,#edf5fb 0%,#f7f5fb 52%,#f3f8f7 100%);
+    border:1px solid var(--line);
+    box-shadow:0 10px 26px rgba(23,50,77,.06)
+  }
+  .footer{padding:30px 0 48px;color:#718096;font-size:13px}
+  .muted{color:var(--muted)}
+  .small{font-size:13px}
+  @media (max-width:900px){
+    h1{font-size:34px}
+    .hero-grid,.grid3,.strategy,.role-grid{grid-template-columns:1fr}
+    section{padding:42px 0}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Delta Solution Office · Talent Strategy Refresh</div>
+      <h1>從「條件堆疊」到「角色聚焦」</h1>
+      <p class="lead">
+        這次 JD 調整的核心，不是降低標準，而是保留真正關鍵能力、放寬非必要交集，
+        並把每個角色的 ownership 與 career proposition 說清楚，讓對的人更願意投。
+      </p>
+    </div>
+    <div class="hero-card">
+      <div class="big">3 個關鍵職缺</div>
+      <div class="small">Program · Site Integration · Service Operations</div>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="wrap">
+    <a href="#why">為什麼要調整</a>
+    <a href="#logic">優化邏輯</a>
+    <a href="#summary">職缺調整總覽</a>
+    <a href="#pm">Program Manager</a>
+    <a href="#site">Site Integration</a>
+    <a href="#ops">Service Operations</a>
+  </div>
+</nav>
+
+<main>
+<section id="why" class="section-band">
+  <div class="wrap">
+    <div class="kicker">01 · Why change</div>
+    <h2>履歷少，不代表市場沒人；三個職缺其實是三種不同問題</h2>
+    <p class="section-intro">
+      目前三個職缺的 applicant funnel 都偏小，但原因不同。若只用同一種方式「放寬條件」，
+      會失去原本需要的能力；因此這次採用 role-specific 的調整方式。
+    </p>
+
+    <div class="grid3">
+      <div class="card">
+        <div class="num">1</div>
+        <h3>Program Manager：Pool Problem</h3>
+        <p>Microgrid / DCIM domain 條件太窄，讓很多有能力的 Technical PM、Energy PM、SI PM 在投遞前就自我淘汰。</p>
+      </div>
+      <div class="card">
+        <div class="num">2</div>
+        <h3>Site Integration：Intersection Problem</h3>
+        <p>若同時要求 commissioning、OT、DCIM、EMS、BMS、SCADA、protocol、training，人才交集會非常小。</p>
+      </div>
+      <div class="card">
+        <div class="num">3</div>
+        <h3>Service Operations：Story Problem</h3>
+        <p>候選人不是不具備能力，而是不清楚「Delta 為什麼需要這個角色、進來能 build 什麼、未來會長成什麼」。</p>
+      </div>
+    </div>
+
+    <div class="strategy">
+      <div class="panel before">
+        <h3>原本容易出現的問題</h3>
+        <ul>
+          <li>Domain requirement 被候選人理解成 hard gate</li>
+          <li>JD 同時涵蓋太多不同專業能力</li>
+          <li>大量使用 support / coordinate，ownership 不夠清楚</li>
+          <li>看得出工作內容，但看不出加入後的職涯價值</li>
+        </ul>
+      </div>
+      <div class="panel after">
+        <h3>新的設計原則</h3>
+        <ul>
+          <li>保留真正 must-have，其他移到 preferred</li>
+          <li>把「AND」條件改成「one or more of」</li>
+          <li>強調 outcome ownership，而不是行政協調</li>
+          <li>清楚說明 0→1、Cross-BG、regional scale 的挑戰與影響力</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="logic" style="background:#fbfdff">
+  <div class="wrap">
+    <div class="kicker">02 · Optimization logic</div>
+    <h2>不是放寬要求，而是讓條件更像「人才市場看得懂的工作」</h2>
+    <div class="quote">
+      Keep the critical capabilities as must-haves, while avoiding unnecessary overlap that significantly narrows the candidate pool.
+    </div>
+  </div>
+</section>
+
+<section id="summary" class="section-band" style="background:linear-gradient(180deg,#ffffff,#f8fbfe)">
+  <div class="wrap">
+    <div class="kicker">03 · Role refresh</div>
+    <h2>職缺調整總覽</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Role</th>
+            <th>原本主要問題</th>
+            <th>優化方式</th>
+            <th>新的招聘訊息</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Senior Solution Program Manager</strong></td>
+            <td>Microgrid / DCIM domain 條件造成 pool 過窄</td>
+            <td>Execution、coordination、system understanding 為核心；domain 改為 strong plus</td>
+            <td>Own end-to-end execution of a cross-BG solution</td>
+          </tr>
+          <tr>
+            <td><strong>Site Integration & Commissioning Manager</strong></td>
+            <td>能力要求過度堆疊，候選人容易覺得自己「不夠完整」</td>
+            <td>保留 field integration + commissioning + OT judgment；training 移除，DCIM / EMS / protocol 改為 preferred</td>
+            <td>Own the first reference deployment and make the solution work in the real world</td>
+          </tr>
+          <tr>
+            <td><strong>Solution Operations & Service Strategy Manager</strong></td>
+            <td>Candidate 不知道 Delta 為何需要這個角色</td>
+            <td>把角色重新定位為 0→1 建立 software / solution operating model</td>
+            <td>Build the operating model, not just operate an existing service</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="pm" class="section-band">
+  <div class="wrap">
+    <div class="role">
+      <div class="role-head">
+        <h3>Senior Solution Program Manager – Data Center & Energy</h3>
+        <div class="subtitle">Location · Taipei, Taiwan</div>
+      </div>
+      <div class="role-body">
+        <div class="role-grid">
+          <div class="block">
+            <h4>Role Overview</h4>
+            <p>
+              We are looking for a Senior Solution Program Manager to drive the execution of cross-BG solution projects
+              from defined requirements through pilot deployment.
+            </p>
+            <p>
+              This is not a software development PM role. Your focus is end-to-end solution execution,
+              dependency management, requirement alignment, site readiness, and issue closure.
+            </p>
+          </div>
+          <div class="block">
+            <h4>What You Will Own</h4>
+            <ul>
+              <li>Drive projects from scope alignment through pilot and go-live</li>
+              <li>Manage milestones, dependencies, risks, actions, and deliverables</li>
+              <li>Coordinate BG, IT, architects, domain teams, vendors, and site stakeholders</li>
+              <li>Facilitate requirement clarification and decision follow-up</li>
+              <li>Coordinate SIT, UAT, pilot readiness, and issue resolution</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="role-grid" style="margin-top:22px">
+          <div class="block">
+            <h4>Required</h4>
+            <ul>
+              <li>5+ years in Project / Program / Solution Management, Technical PM, or System Integration</li>
+              <li>Strong cross-functional project execution</li>
+              <li>Ability to understand software applications, interfaces, and technical discussions</li>
+              <li>Strong stakeholder management and communication</li>
+              <li>Customer- or site-facing project experience</li>
+              <li>Fluent in English and Chinese</li>
+            </ul>
+          </div>
+          <div class="block">
+            <h4>Preferred</h4>
+            <div>
+              <span class="tag">Data Center</span>
+              <span class="tag">Energy</span>
+              <span class="tag">EMS</span>
+              <span class="tag">BESS</span>
+              <span class="tag">Microgrid</span>
+              <span class="tag">DCIM</span>
+              <span class="tag">BMS / SCADA</span>
+            </div>
+            <ul>
+              <li>Site deployment / commissioning / system integration</li>
+              <li>APIs, OT systems, cloud / edge platforms</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout">
+          招聘訊息重點：Execution is mandatory. Domain is a strong plus.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="site" class="section-band" style="background:linear-gradient(180deg,#f8fbfb,#ffffff)">
+  <div class="wrap">
+    <div class="role">
+      <div class="role-head">
+        <h3>Site Integration & Commissioning Manager</h3>
+        <div class="subtitle">Location · Taipei, Taiwan</div>
+      </div>
+      <div class="role-body">
+        <div class="role-grid">
+          <div class="block">
+            <h4>Role Overview</h4>
+            <p>
+              We are looking for an experienced Site Integration & Commissioning Manager to lead the deployment and
+              validation of our Cross-BG solution projects.
+            </p>
+            <p>
+              You will bridge solution design and field execution. You do not need to perform installation work yourself,
+              but you must have strong field experience and be able to communicate effectively with both OT and software teams.
+            </p>
+          </div>
+          <div class="block">
+            <h4>What You Will Own</h4>
+            <ul>
+              <li>Lead site survey, readiness assessment, integration planning, SIT, commissioning, and validation</li>
+              <li>Coordinate SI teams, BG engineers, IT / software teams, vendors, and site stakeholders</li>
+              <li>Review OT network, device connectivity, gateways, protocols, interfaces, and prerequisites</li>
+              <li>Support data-point mapping, interface clarification, and troubleshooting</li>
+              <li>Drive technical issues toward closure</li>
+              <li>Maintain integration documents, test plans, and commissioning records</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="role-grid" style="margin-top:22px">
+          <div class="block">
+            <h4>Required</h4>
+            <ul>
+              <li>7+ years in system integration, commissioning, industrial automation, site deployment, or technical project delivery</li>
+              <li>Strong field experience with complex multi-system environments</li>
+              <li>Solid understanding of OT systems, networking, equipment integration, and commissioning</li>
+              <li>Strong troubleshooting, coordination, and stakeholder management</li>
+              <li>Fluent in English and Chinese</li>
+            </ul>
+          </div>
+          <div class="block">
+            <h4>Preferred</h4>
+            <div>
+              <span class="tag">Data Center</span>
+              <span class="tag">DCIM / EMS</span>
+              <span class="tag">Microgrid</span>
+              <span class="tag">BMS / SCADA</span>
+              <span class="tag">Industrial Automation</span>
+              <span class="tag">Power / Energy</span>
+            </div>
+            <ul>
+              <li>Modbus, BACnet, OPC UA, REST API, gateways, industrial networking</li>
+              <li>DCIM / EMS / industrial software deployment</li>
+              <li>SIT / UAT and cross-system troubleshooting</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout">
+          調整重點：拿掉 training / enablement 作為招聘條件；保留「懂現場、懂整合、能與 SI 充分溝通」三個核心。
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="ops" class="section-band" style="background:linear-gradient(180deg,#fffdf9,#ffffff)">
+  <div class="wrap">
+    <div class="role">
+      <div class="role-head">
+        <h3>Solution Operations & Service Strategy Manager</h3>
+        <div class="subtitle">Location · Taipei, Taiwan</div>
+      </div>
+      <div class="role-body">
+        <div class="role-grid">
+          <div class="block">
+            <h4>Role Overview</h4>
+            <p>
+              Delta is expanding from hardware products toward software-enabled and recurring solution businesses.
+              We are looking for a Solution Operations & Service Strategy Manager to help design how these new solutions
+              should be operated, supported, governed, and scaled globally.
+            </p>
+            <p>
+              This is a <strong>0-to-1 role</strong>. You will help build the operating model and work with Delta’s existing
+              IT, Service, BG, and regional organizations to make it real.
+            </p>
+          </div>
+          <div class="block">
+            <h4>What You Will Own</h4>
+            <ul>
+              <li>Define the operating model for software-enabled and cross-BG solutions</li>
+              <li>Establish service ownership, support tiers, escalation paths, and cross-functional R&R</li>
+              <li>Define standards for SLA, incident, problem, change, release, and lifecycle management</li>
+              <li>Establish service-readiness criteria before launch</li>
+              <li>Build reusable playbooks, KPIs, governance mechanisms, and operating processes</li>
+              <li>Help shape and eventually lead a future Solution Service & Operations capability</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="role-grid" style="margin-top:22px">
+          <div class="block">
+            <h4>Required</h4>
+            <ul>
+              <li>7+ years in SaaS / Software Operations, Solution Operations, Service Strategy, Customer Success Operations, or related roles</li>
+              <li>Experience designing or improving enterprise software operating models</li>
+              <li>Strong knowledge of SLA, incident / problem / change / release management</li>
+              <li>Proven ability to build processes across multiple organizations</li>
+              <li>Strong business and stakeholder-management capability</li>
+              <li>Fluent in English and Chinese</li>
+            </ul>
+          </div>
+          <div class="block">
+            <h4>Preferred</h4>
+            <ul>
+              <li>Experience from leading SaaS, enterprise software, cloud, or digital-solution companies</li>
+              <li>Experience at Siemens, Schneider Electric, or similar industrial-digital companies</li>
+              <li>Experience building a new operation or service-management function from the ground up</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout">
+          招聘訊息重點：Build the operating model, not just operate an existing service.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:radial-gradient(circle at 84% 18%,rgba(42,143,138,.28),transparent 26%),radial-gradient(circle at 16% 88%,rgba(198,155,75,.18),transparent 24%),linear-gradient(135deg,#17324d,#244d6d 62%,#2f6f73);color:white">
+  <div class="wrap">
+    <div class="kicker" style="color:#9bc7e5">Closing message</div>
+    <h2 style="color:white">這次調整，不是把門檻降低，而是把門檻放在真正重要的地方。</h2>
+    <p class="lead" style="font-size:17px">
+      目標是讓 candidate 更清楚：自己為什麼適合、進來要 own 什麼、以及這個角色在 Delta solution transformation 裡會造成什麼影響。
+    </p>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="wrap">Delta Solution Office · JD Optimization Summary</div>
+</footer>
+</body>
+</html>
